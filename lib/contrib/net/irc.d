@@ -163,15 +163,12 @@ class IrcConnection {
                 }
                 eventHandler.processEvent( event );
             }
-
-            writefln( "received \"%s\" from %s", cmd, host );
         }
     }                
     
     private void _send( string host, string message ) {
         foreach( Socket sock, string _host; _hosts ) {
             if( host == _host ) {
-                writeln( "Sending: %s", message );                
                 sock.send( message ~ "\r\n" );
             }
         }
