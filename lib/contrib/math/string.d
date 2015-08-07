@@ -7,15 +7,14 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE 
 */
-
-import std.stdio;
-import std.conv;
+module contrib.math.string;
+import std.conv : to;
 import std.string;
 import std.array;
 import std.regex;
 
-float evaluateString( string _math ) {
-    
+float evaluateMathString( string _math ) {
+     return __mathString( _math );
 }
 
 float __mathString( string _math ) {
@@ -23,7 +22,6 @@ float __mathString( string _math ) {
     if( _math.indexOf( "(" ) >= 0 ) {
         auto r = regex( r"\([0-9.]+([+-/*%][0-9.]+)+\)" );
         if( match( _math, r ) ) {
-            writeln( _math );
             string myMatch;
             foreach( c; match( _math, r ) ) {
                 myMatch = c.hit;
@@ -33,7 +31,6 @@ float __mathString( string _math ) {
             myMatch = chompPrefix( chomp( myMatch, ")" ), "(" );
             return __mathString( chunks.join( to!string( __mathString( myMatch ) ) ) );
         } else {
-            writeln( "didn't match!" );
             return 1;
         }
     } else if( _math.indexOf( "+" ) >= 0 ) {

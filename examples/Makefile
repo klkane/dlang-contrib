@@ -1,4 +1,4 @@
-all: ansi_string game_dice net_irc
+all: ansi_string game_dice net_irc math_string
 
 ansi_string:
 	dmd -ofansi_string ../lib/contrib/ansi/string.d ansi_string.d
@@ -9,5 +9,8 @@ game_dice:
 net_irc:
 	dmd -ofnet_irc ../lib/contrib/net/irc.d net_irc.d
 
+math_string:
+	dmd -ofmath_string ../lib/contrib/math/string.d math_string.d
+
 clean:
-	rm *.o ansi_string game_dice net_irc
+	rm *.o ansi_string game_dice net_irc math_string
