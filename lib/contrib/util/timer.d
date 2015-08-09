@@ -13,6 +13,7 @@ import core.time;
 import core.thread;
 import std.stdio;
 import std.datetime : Clock;
+import std.algorithm;
 
 class Timer {
     long last_check;
@@ -59,7 +60,8 @@ class Timer {
 
 class TimerSet {
     Timer[] timers;
-    
+    long setDuration = 150;
+ 
     void add( Timer t ) {
         timers ~= t;
     }
@@ -69,7 +71,9 @@ class TimerSet {
         while( go ) {
             // assume we are done
             go = false;
-            foreach( Timer t; timers ) {
+            int remove_index;
+            bool do_remove = false;
+            foreach( int i, Timer t; timers ) {
                 if( t.check() ) {
                     // a timer condition has been met
                 }    
@@ -77,10 +81,21 @@ class TimerSet {
                 if( t.active ) {
                     // something is still active lets do another loop
                     go = true;
+                } else {
+                    // mark this timer for removal
+                    do_remove = true;
+                    remove_index = i;
                 }
             }
 
-            Thread.sleep( 100.msecs ); //.msecs );
+            // remove last timer that was not active.
+            // should i attempt to remove all inactive timers at once
+            // or a max of 1 at a time?
+            if( do_remove ) {
+                timers = remove( timers, remove_index );
+            }
+
+            Thread.sleep( setDuration.msecs ); 
         }
     }
 }
