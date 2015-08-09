@@ -1,4 +1,4 @@
-all: ansi_string game_dice net_irc math_string
+all: ansi_string game_dice net_irc math_string util_timer
 
 ansi_string:
 	dmd -ofansi_string ../lib/contrib/ansi/string.d ansi_string.d
@@ -12,5 +12,8 @@ net_irc:
 math_string:
 	dmd -ofmath_string ../lib/contrib/math/string.d math_string.d
 
+util_timer:
+	dmd -ofutil_timer ../lib/contrib/util/timer.d util_timer.d
+
 clean:
-	rm *.o ansi_string game_dice net_irc math_string
+	rm *.o ansi_string game_dice net_irc math_string util_timer
