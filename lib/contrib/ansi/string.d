@@ -49,14 +49,16 @@ enum ANSI {
 }
 
 string sansif( string _str, int[] codes ... ) {
+    return format( "%s%s%s", sansicode( codes ), _str, sansicode( ANSI.NONE ) );
+}
+
+string sansicode( int[] codes ... ) {
     char chr = '\x1b';
-    
     string[] strs;
 
     foreach( int code; codes ) {
-        strs ~= to!string( code );       
+        strs ~= to!string( code );
     }
 
-    return format( "%s[%sm%s%s[0m", chr, join( strs , ";" ), _str, chr );
+    return format( "%s[%sm", chr, join( strs, ";" ) );
 }
-
